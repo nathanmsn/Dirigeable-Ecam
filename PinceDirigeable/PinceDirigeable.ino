@@ -46,10 +46,10 @@ int conteurBasDecaler = 0;
 boolean arreterLesMesures = false; //pour arrêter la prise d'info supplémentaire quand le moteur fait déjà quelque chose
 
 
-int ouvrir;
-int descendre;
-int tourner;
-int decaler;
+float ouvrir;
+float descendre;
+float tourner;
+float decaler;
 
 
 void setup() {
@@ -128,7 +128,7 @@ ISR(TIMER4_COMPB_vect){//timer1 interrupt 1Hz
 void descendrePince(){
 
     
-  if(descendre <= 512 && descendre != 0){
+  if(descendre <= 2.5 && descendre != 0){
       stepDescendre.step(stepsPerRevolution/2); //fait un demi tour de moteur d vers le bas
       nombreDeDemiToursDescendre++;
       conteurBasDescendre++;
@@ -151,7 +151,7 @@ void descendrePince(){
 void tournerPince(){
 
     
-  if(tourner <= 512 && tourner != 0){
+  if(tourner <= 2.5 && tourner != 0){
       stepTourner.step(stepsPerRevolution/2); //fait un demi tour de moteur d vers le bas
       nombreDeDemiToursTourner++;
       conteurBasTourner++;
@@ -174,7 +174,7 @@ void tournerPince(){
 
 void decalerPince(){
  
-  if(decaler <= 512 && decaler != 0){
+  if(decaler <= 2.5 && decaler != 0){
       stepDecaler.step(stepsPerRevolution/2); //fait un demi tour de moteur d vers le bas
       nombreDeDemiToursDecaler++;
       conteurBasDecaler++;
@@ -200,7 +200,7 @@ void ouvrirPince(){
     if(ouvrir == 0){
       
     }
-    else if(ouvrir <= 512){
+    else if(ouvrir <= 2.5){
       anglePince = anglePince + 2;
       servoOuvrir.write(anglePince);
     
