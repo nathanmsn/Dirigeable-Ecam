@@ -141,6 +141,7 @@ void descendrePince(){
       conteurHautDescendre++;
       if(conteurHautDescendre >= 2){ //Si ça fait 2s que on appuit sur le boutton
          stepDescendre.step(-stepsPerRevolution*nombreDeDemiToursDescendre/2);//On revient jusqu'en haut
+         conteurHautDescendre = 0;
       }
    
     }
@@ -164,6 +165,7 @@ void tournerPince(){
       conteurHautTourner++;
       if(conteurHautTourner >= 2){ //Si ça fait 2s que on appuit sur le boutton
          stepTourner.step(-stepsPerRevolution*nombreDeDemiToursTourner/2);//On revient jusqu'en haut
+         conteurHautTourner = 0;
       }
    
     }
@@ -187,6 +189,7 @@ void decalerPince(){
       conteurHautDecaler++;
       if(conteurHautDecaler >= 2){ //Si ça fait 2s que on appuit sur le boutton
          stepDecaler.step(-stepsPerRevolution*nombreDeDemiToursDecaler/2);//On revient jusqu'en haut
+         conteurHautDecaler = 0;
       }
     }
   
