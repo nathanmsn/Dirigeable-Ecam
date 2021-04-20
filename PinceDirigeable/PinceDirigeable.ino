@@ -31,19 +31,12 @@ Stepper stepDecaler(stepsPerRevolution, 18, 19, 20, 21);
 
 
 int nombreDeDemiToursDescendre = 0;
-int conteurHautDescendre = 0;
-int conteurBasDescendre = 0;
 
 int nombreDeDemiToursTourner = 0;
-int conteurHautTourner = 0;
-int conteurBasTourner = 0;
 
 int nombreDeDemiToursDecaler = 0;
-int conteurHautDecaler = 0;
-int conteurBasDecaler = 0;
 
-
-boolean arreterLesMesures = false; //pour arrêter la prise d'info supplémentaire quand le moteur fait déjà quelque chose
+boolean arreterLesActions = false; //pour arrêter la prise d'info supplémentaire quand le moteur fait déjà quelque chose
 
 
 float ouvrir;
@@ -92,12 +85,14 @@ stepDecaler.setSpeed(5);
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if(arreterLesMesures == false){
+  if(arreterLesActions == false){
     ouvrirPince();
-    descendrePince();
-    tournerPince();
-    decalerPince();
-    arreterLesMesures = true;
+    nombreDeDemiToursDescendre = bougerMoteurPasAPas(descendre, 10, 11, 12, 13, nombreDeDemiToursDescendre);
+    nombreDeDemiToursTourner = bougerMoteurPasAPas(tourner, 14, 15, 16, 17, nombreDeDemiToursTourner);
+    nombreDeDemiToursDecaler = bougerMoteurPasAPas(decaler, 18, 19, 20, 21, nombreDeDemiToursDecaler);
+    
+
+    arreterLesActions = true;
     
   }
 
@@ -112,7 +107,7 @@ ISR(TIMER4_COMPB_vect){//timer1 interrupt 1Hz
   descendre = analogRead(pinDescendre)*5.00/1023;
   tourner = analogRead(pinTourner)*5.00/1023;
   decaler = analogRead(pinDecaler)*5.00/1023;
-  arreterLesMesures = false; 
+  arreterLesActions = false; 
  
  // Serial.println("ça marche");
 
@@ -125,76 +120,31 @@ ISR(TIMER4_COMPB_vect){//timer1 interrupt 1Hz
 
 //penser à faire des essaies sur les voltages en input
 
-void descendrePince(){
+int bougerMoteurPasAPas(float mesure, int pin1, int pin2, int pin3, int pin4, int nombreDeDemiTours){
+  Stepper thisStep(stepsPerRevolution, pin1, pin2, pin3, pin4);
+  thisStep.setSpeed(5);
 
     
-  if(descendre <= 2.5 && descendre != 0){
-      stepDescendre.step(stepsPerRevolution/2); //fait un demi tour de moteur d vers le bas
-      nombreDeDemiToursDescendre++;
-      conteurBasDescendre++;
+  if(mesure <= 2.5 && mesure != 0){
+      thisStep.step(stepsPerRevolution/2); //fait un demi tour de moteur d vers le bas
+      nombreDeDemiTours++;
+      
       
     
     }
     else{
-      stepDescendre.step(-stepsPerRevolution/2); //va vers le haut
-      nombreDeDemiToursDescendre--;
-      conteurHautDescendre++;
-      if(conteurHautDescendre >= 2){ //Si ça fait 2s que on appuit sur le boutton
-         stepDescendre.step(-stepsPerRevolution*nombreDeDemiToursDescendre/2);//On revient jusqu'en haut
-         conteurHautDescendre = 0;
-      }
+      thisStep.step(-stepsPerRevolution/2); //va vers le haut
+      nombreDeDemiTours--;
    
     }
+
+    return nombreDeDemiTours;
   
 }
 
 
-void tournerPince(){
-
-    
-  if(tourner <= 2.5 && tourner != 0){
-      stepTourner.step(stepsPerRevolution/2); //fait un demi tour de moteur d vers le bas
-      nombreDeDemiToursTourner++;
-      conteurBasTourner++;
-      
-    
-    }
-    else{
-      stepTourner.step(-stepsPerRevolution/2); //va vers le haut
-      nombreDeDemiToursTourner--;
-      conteurHautTourner++;
-      if(conteurHautTourner >= 2){ //Si ça fait 2s que on appuit sur le boutton
-         stepTourner.step(-stepsPerRevolution*nombreDeDemiToursTourner/2);//On revient jusqu'en haut
-         conteurHautTourner = 0;
-      }
-   
-    }
 
 
-}
-
-
-void decalerPince(){
- 
-  if(decaler <= 2.5 && decaler != 0){
-      stepDecaler.step(stepsPerRevolution/2); //fait un demi tour de moteur d vers le bas
-      nombreDeDemiToursDecaler++;
-      conteurBasDecaler++;
-      
-    
-    }
-    else{
-      stepDecaler.step(-stepsPerRevolution/2); //va vers le haut
-      nombreDeDemiToursDecaler--;
-      conteurHautDecaler++;
-      if(conteurHautDecaler >= 2){ //Si ça fait 2s que on appuit sur le boutton
-         stepDecaler.step(-stepsPerRevolution*nombreDeDemiToursDecaler/2);//On revient jusqu'en haut
-         conteurHautDecaler = 0;
-      }
-    }
-  
-
-}
 
 
 
