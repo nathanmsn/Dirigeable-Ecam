@@ -1,7 +1,8 @@
-
 #include <Servo.h> //Ca marche pas à cause des timers 16 bits, prendre le B, penser à tester jsp pourquoi où à quoi ça sert le b mais ça compile
 #include <avr/interrupt.h>
 #include <Stepper.h> 
+
+/*début initialisation pince*/
 
 //Pin input pince
 const uint8_t pinOuvrir = A1;
@@ -12,11 +13,6 @@ const uint8_t pinDecaler = A4;
 
 //Pin output pince
 const uint8_t servoPinOuvrir = 5; 
-
-
-
-
-
 
 //intialisation du servo
 Servo servoOuvrir;
@@ -29,20 +25,24 @@ Stepper stepDescendre(stepsPerRevolution, 10, 11, 12, 13);
 Stepper stepTourner(stepsPerRevolution, 14, 15, 16, 17);
 Stepper stepDecaler(stepsPerRevolution, 18, 19, 20, 21);
 
-
 int nombreDeDemiToursDescendre = 0;
-
 int nombreDeDemiToursTourner = 0;
-
 int nombreDeDemiToursDecaler = 0;
 
+const int nombreDeRevolutionEntreDeuxCremailliere = 10;//au pif, valeur à changer
+const int nombreDeRevolutionDeLaTranslationPourPoser = 3;
 boolean arreterLesActions = false; //pour arrêter la prise d'info supplémentaire quand le moteur fait déjà quelque chose
 
+int placeARemplir = 0;
 
 float ouvrir;
 float descendre;
 float tourner;
 float decaler;
+
+/*début initialisation propulsion*/
+
+/*début initialisation stabilisation*/
 
 
 void setup() {
@@ -90,14 +90,9 @@ void loop() {
     nombreDeDemiToursDescendre = bougerMoteurPasAPas(descendre, 10, 11, 12, 13, nombreDeDemiToursDescendre);
     nombreDeDemiToursTourner = bougerMoteurPasAPas(tourner, 14, 15, 16, 17, nombreDeDemiToursTourner);
     nombreDeDemiToursDecaler = bougerMoteurPasAPas(decaler, 18, 19, 20, 21, nombreDeDemiToursDecaler);
-    
-
     arreterLesActions = true;
     
   }
-
- 
-
   
 }
 
@@ -114,22 +109,15 @@ ISR(TIMER4_COMPB_vect){//timer1 interrupt 1Hz
 }
 
 
-
-
-
-
 //penser à faire des essaies sur les voltages en input
 
 int bougerMoteurPasAPas(float mesure, int pin1, int pin2, int pin3, int pin4, int nombreDeDemiTours){
   Stepper thisStep(stepsPerRevolution, pin1, pin2, pin3, pin4);
   thisStep.setSpeed(5);
-
-    
+   
   if(mesure <= 2.5 && mesure != 0){
       thisStep.step(stepsPerRevolution/2); //fait un demi tour de moteur d vers le bas
-      nombreDeDemiTours++;
-      
-      
+      nombreDeDemiTours++;    
     
     }
     else{
@@ -138,36 +126,35 @@ int bougerMoteurPasAPas(float mesure, int pin1, int pin2, int pin3, int pin4, in
    
     }
 
-    return nombreDeDemiTours;
-  
+    return nombreDeDemiTours; 
 }
-
-
-
-
-
 
 
 void ouvrirPince(){
   if(arreterDOuvrir == false){
-    if(ouvrir == 0){
-      
+    if(ouvrir == 0){     
     }
     else if(ouvrir <= 2.5){
       anglePince = anglePince + 2;
-      servoOuvrir.write(anglePince);
-    
+      servoOuvrir.write(anglePince); 
     }
     else{
       anglePince = anglePince - 2;
-      servoOuvrir.write(anglePince);
-   
+      servoOuvrir.write(anglePince);  
     }
-
     arreterDOuvrir = true;
   }
+}
 
-
+void remonterEtDeposer(){
+  stepDecaler.step(nombreDeDemiToursDecaler*stepsPerRevolution/2);
+  nombreDeDemiToursDecaler = 0;
+  stepTourner.step(nombreDeDemiToursTourner*stepsPerRevolution/2); 
+  nombreDeDemiToursTourner = 0;
+  stepDescendre.step(nombreDeDemiToursDescendre*stepsPerRevolution/2-placeARemplir*nombreDeRevolutionEntreDeuxCremailliere*stepsPerRevolution);
+  nombreDeDemiToursDescendre = nombreDeRevolutionEntreDeuxCremailliere*placeARemplir/2;
+  servoOuvrir.write(0);  //jsp si ça sera vraiment 0 pour l'ouvrir
+  placeARemplir++;
 }
 
 
