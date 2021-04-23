@@ -52,13 +52,9 @@ void setup() {
   pinMode(pinDescendre, INPUT);
   pinMode(pinTourner, INPUT);
   pinMode(pinDecaler, INPUT);
-
-
   
   servoOuvrir.attach(servoPinOuvrir);
-  
-
-  
+   
  //set timer4 interrupt at 1Hz
  TCCR4A = 0;// set entire TCCR1A register to 0
  TCCR4B = 0;// same for TCCR1B
@@ -72,13 +68,24 @@ void setup() {
  // enable timer compare interrupt
  TIMSK4 |= (1 << OCIE4A);
 
+ //set timer0 interrupt at 1kHz
+  TCCR0A = 0;// set entire TCCR2A register to 0
+  TCCR0B = 0;// same for TCCR2B
+  TCNT0  = 0;//initialize counter value to 0
+  // set compare match register for 2khz increments
+  OCR0A = 249;// = (16*10^6) / (2000*64) - 1 (must be <256)
+  // turn on CTC mode
+  TCCR0A |= (1 << WGM01);
+  // Set CS01 and CS00 bits for 64 prescaler
+  TCCR0B |= (1 << CS01) | (1 << CS00);   
+  // enable timer compare interrupt
+  TIMSK0 |= (1 << OCIE0A);
 
-
-sei();//allow interrupts
-
-stepDescendre.setSpeed(5); //vitesse de 60 rpm, jsp pas trop pourquoi il faut mettre 5 mais bon on a pas mieux
-stepTourner.setSpeed(5);
-stepDecaler.setSpeed(5);
+  sei();//allow interrupts
+  
+  stepDescendre.setSpeed(5); //vitesse de 60 rpm, jsp pas trop pourquoi il faut mettre 5 mais bon on a pas mieux
+  stepTourner.setSpeed(5);
+  stepDecaler.setSpeed(5);
 
 
 }
@@ -105,6 +112,11 @@ ISR(TIMER4_COMPB_vect){//timer1 interrupt 1Hz
   arreterLesActions = false; 
  
  // Serial.println("ça marche");
+
+}
+
+ISR(TIMER0_COMPA_vect){//timer1 interrupt 1Hz
+  //pour les valeurs de la stabilisation
 
 }
 
@@ -155,6 +167,15 @@ void remonterEtDeposer(){
   nombreDeDemiToursDescendre = nombreDeRevolutionEntreDeuxCremailliere*placeARemplir/2;
   servoOuvrir.write(0);  //jsp si ça sera vraiment 0 pour l'ouvrir
   placeARemplir++;
+}
+
+
+
+
+
+void moteurDC(int sens, int intensite, int pinSens, int pinIntensite){
+    digitalWrite(pinSens, sens);
+    analogWrite(pinIntensite, intensite);
 }
 
 
