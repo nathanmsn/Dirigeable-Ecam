@@ -10,7 +10,16 @@ const uint8_t pinDescendre = A2;
 const uint8_t pinTourner = A3;
 const uint8_t pinDecaler = A4;
 
-//salut bien
+//Pin input propulsion
+
+const uint8_t pinArret=A5;
+const uint8_t pinDemarrer=A6;
+const uint8_t pinRalentir=A7;
+const uint8_t pinAccelerer=A9;
+const uint8_t pinGauche=A10;
+const uint8_t pinDroite=A11;
+
+
 //Pin output pince
 const uint8_t servoPinOuvrir = 5; 
 
@@ -41,6 +50,17 @@ float tourner;
 float decaler;
 
 /*début initialisation propulsion*/
+boolean arreter;
+boolean accelerer;
+boolean ralentir;
+boolean demarrer;
+boolean gauche;
+boolean droite; 
+int Power = 80;
+
+const uint8_t pinMoteur1=3;
+const uint8_t pinMoteur2=7;
+
 
 /*début initialisation stabilisation*/
 
@@ -52,13 +72,23 @@ void setup() {
   pinMode(pinDescendre, INPUT);
   pinMode(pinTourner, INPUT);
   pinMode(pinDecaler, INPUT);
-
-
   
   servoOuvrir.attach(servoPinOuvrir);
-  
+
+
+  //pour la propulsion 
+  pinMode(pinMoteur1,OUTPUT);
+  pinMode(pinMoteur2,OUTPUT);
+  pinMode(pinGauche,INPUT);
+  pinMode(pinDroite,INPUT);
+  pinMode(pinDemarrer,INPUT);
+  pinMode(pinArret,INPUT);
+  pinMode(pinRalentir,INPUT);
+  pinMode(pinAccelerer,INPUT);
+
 
   
+   
  //set timer4 interrupt at 1Hz
  TCCR4A = 0;// set entire TCCR1A register to 0
  TCCR4B = 0;// same for TCCR1B
@@ -72,13 +102,24 @@ void setup() {
  // enable timer compare interrupt
  TIMSK4 |= (1 << OCIE4A);
 
+ //set timer0 interrupt at 1kHz
+  TCCR0A = 0;// set entire TCCR2A register to 0
+  TCCR0B = 0;// same for TCCR2B
+  TCNT0  = 0;//initialize counter value to 0
+  // set compare match register for 2khz increments
+  OCR0A = 249;// = (16*10^6) / (2000*64) - 1 (must be <256)
+  // turn on CTC mode
+  TCCR0A |= (1 << WGM01);
+  // Set CS01 and CS00 bits for 64 prescaler
+  TCCR0B |= (1 << CS01) | (1 << CS00);   
+  // enable timer compare interrupt
+  TIMSK0 |= (1 << OCIE0A);
 
-
-sei();//allow interrupts
-
-stepDescendre.setSpeed(5); //vitesse de 60 rpm, jsp pas trop pourquoi il faut mettre 5 mais bon on a pas mieux
-stepTourner.setSpeed(5);
-stepDecaler.setSpeed(5);
+  sei();//allow interrupts
+  
+  stepDescendre.setSpeed(5); //vitesse de 60 rpm, jsp pas trop pourquoi il faut mettre 5 mais bon on a pas mieux
+  stepTourner.setSpeed(5);
+  stepDecaler.setSpeed(5);
 
 
 }
@@ -93,6 +134,31 @@ void loop() {
     arreterLesActions = true;
     
   }
+
+  MiseEnMarche();
+  
+    if(arreter==true){
+      Arreter();
+    }
+    if(ralentir==true){
+      Ralentir();
+    }
+  
+    if(accelerer==true){
+      Accelerer();
+    }
+    if(gauche==true){
+      Gauche();
+    }
+    if(droite==true){
+      Droite();
+    }
+
+
+
+
+
+  
   
 }
 
@@ -105,6 +171,11 @@ ISR(TIMER4_COMPB_vect){//timer1 interrupt 1Hz
   arreterLesActions = false; 
  
  // Serial.println("ça marche");
+
+}
+
+ISR(TIMER0_COMPA_vect){//timer1 interrupt 1Hz
+  //pour les valeurs de la stabilisation
 
 }
 
@@ -155,6 +226,43 @@ void remonterEtDeposer(){
   nombreDeDemiToursDescendre = nombreDeRevolutionEntreDeuxCremailliere*placeARemplir/2;
   servoOuvrir.write(0);  //jsp si ça sera vraiment 0 pour l'ouvrir
   placeARemplir++;
+}
+
+
+
+
+
+void moteurDC(int sens, int intensite, int pinSens, int pinIntensite){
+    digitalWrite(pinSens, sens);
+    analogWrite(pinIntensite, intensite);
+}
+
+void Arreter(){
+  analogWrite(pinMoteur1,0);
+  analogWrite(pinMoteur2,0);
+}
+void MiseEnMarche(){
+  analogWrite(pinMoteur1,1);
+  analogWrite(pinMoteur2,1);
+}
+void Ralentir(){
+  Power = 40;
+  analogWrite(pinMoteur1,Power);
+  analogWrite(pinMoteur2,Power);
+}
+
+void Accelerer(){
+  Power=255;
+  analogWrite(pinMoteur1,Power);
+  analogWrite(pinMoteur2,Power);
+}
+void Gauche(){
+  analogWrite(pinMoteur1,0);
+  analogWrite(pinMoteur2,1);
+}
+void Droite(){
+  analogWrite(pinMoteur1,1);
+  analogWrite(pinMoteur2,0);
 }
 
 
