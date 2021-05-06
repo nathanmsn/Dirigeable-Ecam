@@ -10,7 +10,16 @@ const uint8_t pinDescendre = A2;
 const uint8_t pinTourner = A3;
 const uint8_t pinDecaler = A4;
 
-//salut bien
+//Pin input propulsion
+
+const uint8_t pinArret=A5;
+const uint8_t pinDemarrer=A6;
+const uint8_t pinRalentir=A7;
+const uint8_t pinAccelerer=A9;
+const uint8_t pinGauche=A10;
+const uint8_t pinDroite=A11;
+
+
 //Pin output pince
 const uint8_t servoPinOuvrir = 5; 
 
@@ -41,6 +50,17 @@ float tourner;
 float decaler;
 
 /*début initialisation propulsion*/
+boolean arreter;
+boolean accelerer;
+boolean ralentir;
+boolean demarrer;
+boolean gauche;
+boolean droite; 
+int Power = 80;
+
+const uint8_t pinMoteur1=3;
+const uint8_t pinMoteur2=7;
+
 
 /*début initialisation stabilisation*/
 
@@ -54,6 +74,20 @@ void setup() {
   pinMode(pinDecaler, INPUT);
   
   servoOuvrir.attach(servoPinOuvrir);
+
+
+  //pour la propulsion 
+  pinMode(pinMoteur1,OUTPUT);
+  pinMode(pinMoteur2,OUTPUT);
+  pinMode(pinGauche,INPUT);
+  pinMode(pinDroite,INPUT);
+  pinMode(pinDemarrer,INPUT);
+  pinMode(pinArret,INPUT);
+  pinMode(pinRalentir,INPUT);
+  pinMode(pinAccelerer,INPUT);
+
+
+  
    
  //set timer4 interrupt at 1Hz
  TCCR4A = 0;// set entire TCCR1A register to 0
@@ -100,6 +134,31 @@ void loop() {
     arreterLesActions = true;
     
   }
+
+  MiseEnMarche();
+  
+    if(arreter==true){
+      Arreter();
+    }
+    if(ralentir==true){
+      Ralentir();
+    }
+  
+    if(accelerer==true){
+      Accelerer();
+    }
+    if(gauche==true){
+      Gauche();
+    }
+    if(droite==true){
+      Droite();
+    }
+
+
+
+
+
+  
   
 }
 
@@ -176,6 +235,34 @@ void remonterEtDeposer(){
 void moteurDC(int sens, int intensite, int pinSens, int pinIntensite){
     digitalWrite(pinSens, sens);
     analogWrite(pinIntensite, intensite);
+}
+
+void Arreter(){
+  analogWrite(pinMoteur1,0);
+  analogWrite(pinMoteur2,0);
+}
+void MiseEnMarche(){
+  analogWrite(pinMoteur1,1);
+  analogWrite(pinMoteur2,1);
+}
+void Ralentir(){
+  Power = 40;
+  analogWrite(pinMoteur1,Power);
+  analogWrite(pinMoteur2,Power);
+}
+
+void Accelerer(){
+  Power=255;
+  analogWrite(pinMoteur1,Power);
+  analogWrite(pinMoteur2,Power);
+}
+void Gauche(){
+  analogWrite(pinMoteur1,0);
+  analogWrite(pinMoteur2,1);
+}
+void Droite(){
+  analogWrite(pinMoteur1,1);
+  analogWrite(pinMoteur2,0);
 }
 
 
