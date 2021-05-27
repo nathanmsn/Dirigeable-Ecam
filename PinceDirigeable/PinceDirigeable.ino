@@ -1,4 +1,4 @@
-#include <Servo.h> //Ca marche pas à cause des timers 16 bits, prendre le B, penser à tester jsp pourquoi où à quoi ça sert le b mais ça compile
+//#include <Servo.h> //Ca marche pas à cause des timers 16 bits, prendre le B, penser à tester jsp pourquoi où à quoi ça sert le b mais ça compile
 #include <avr/interrupt.h>
 #include <Stepper.h> 
 
@@ -10,14 +10,23 @@ const uint8_t pinDescendre = A2;
 const uint8_t pinTourner = A3;
 const uint8_t pinDecaler = A4;
 
-//salut bien
+//Pin input propulsion
+
+const uint8_t pinArret=A5;
+const uint8_t pinDemarrer=A6;
+const uint8_t pinRalentir=A7;
+const uint8_t pinAccelerer=A9;
+const uint8_t pinGauche=A10;
+const uint8_t pinDroite=A11;
+
+
 //Pin output pince
 const uint8_t servoPinOuvrir = 5; 
 
 //intialisation du servo
-Servo servoOuvrir;
-int anglePince = 0;
-boolean arreterDOuvrir = false;
+//Servo servoOuvrir;
+
+
 
 //initialisation du moteur pas à pas
 const int stepsPerRevolution = 90;
@@ -41,24 +50,46 @@ float tourner;
 float decaler;
 
 /*début initialisation propulsion*/
+boolean arreter;
+boolean accelerer;
+boolean ralentir;
+boolean demarrer;
+boolean gauche;
+boolean droite; 
+int Power = 80;
+
+const uint8_t pinMoteur1=3;
+const uint8_t pinMoteur2=7;
+
 
 /*début initialisation stabilisation*/
 
 
 void setup() {
 
+  Serial.begin(9600);
 
   pinMode(pinOuvrir, INPUT);
   pinMode(pinDescendre, INPUT);
   pinMode(pinTourner, INPUT);
   pinMode(pinDecaler, INPUT);
+  
+  //servoOuvrir.attach(servoPinOuvrir);
+
+
+  //pour la propulsion 
+  pinMode(pinMoteur1,OUTPUT);
+  pinMode(pinMoteur2,OUTPUT);
+  pinMode(pinGauche,INPUT);
+  pinMode(pinDroite,INPUT);
+  pinMode(pinDemarrer,INPUT);
+  pinMode(pinArret,INPUT);
+  pinMode(pinRalentir,INPUT);
+  pinMode(pinAccelerer,INPUT);
 
 
   
-  servoOuvrir.attach(servoPinOuvrir);
-  
-
-  
+   
  //set timer4 interrupt at 1Hz
  TCCR4A = 0;// set entire TCCR1A register to 0
  TCCR4B = 0;// same for TCCR1B
@@ -73,12 +104,11 @@ void setup() {
  TIMSK4 |= (1 << OCIE4A);
 
 
-
-sei();//allow interrupts
-
-stepDescendre.setSpeed(5); //vitesse de 60 rpm, jsp pas trop pourquoi il faut mettre 5 mais bon on a pas mieux
-stepTourner.setSpeed(5);
-stepDecaler.setSpeed(5);
+  sei();//allow interrupts
+  
+  stepDescendre.setSpeed(5); //vitesse de 60 rpm, jsp pas trop pourquoi il faut mettre 5 mais bon on a pas mieux
+  stepTourner.setSpeed(5);
+  stepDecaler.setSpeed(5);
 
 
 }
@@ -93,6 +123,31 @@ void loop() {
     arreterLesActions = true;
     
   }
+
+  MiseEnMarche();
+  
+    if(arreter==true){
+      Arreter();
+    }
+    if(ralentir==true){
+      Ralentir();
+    }
+  
+    if(accelerer==true){
+      Accelerer();
+    }
+    if(gauche==true){
+      Gauche();
+    }
+    if(droite==true){
+      Droite();
+    }
+
+
+
+
+
+  
   
 }
 
@@ -107,6 +162,7 @@ ISR(TIMER4_COMPB_vect){//timer1 interrupt 1Hz
  // Serial.println("ça marche");
 
 }
+
 
 
 //penser à faire des essaies sur les voltages en input
@@ -131,19 +187,16 @@ int bougerMoteurPasAPas(float mesure, int pin1, int pin2, int pin3, int pin4, in
 
 
 void ouvrirPince(){
-  if(arreterDOuvrir == false){
-    if(ouvrir == 0){     
+ 
+    if(ouvrir <= 2.5 && ouvrir > 0){
+
     }
-    else if(ouvrir <= 2.5){
-      anglePince = anglePince + 2;
-      servoOuvrir.write(anglePince); 
-    }
-    else{
-      anglePince = anglePince - 2;
-      servoOuvrir.write(anglePince);  
-    }
-    arreterDOuvrir = true;
-  }
+    else if(ouvrir > 2.5 ){
+      
+        
+   }
+  
+
 }
 
 void remonterEtDeposer(){
@@ -153,11 +206,43 @@ void remonterEtDeposer(){
   nombreDeDemiToursTourner = 0;
   stepDescendre.step(nombreDeDemiToursDescendre*stepsPerRevolution/2-placeARemplir*nombreDeRevolutionEntreDeuxCremailliere*stepsPerRevolution);
   nombreDeDemiToursDescendre = nombreDeRevolutionEntreDeuxCremailliere*placeARemplir/2;
-  servoOuvrir.write(0);  //jsp si ça sera vraiment 0 pour l'ouvrir
+  //servoOuvrir.write(0);  //jsp si ça sera vraiment 0 pour l'ouvrir
   placeARemplir++;
 }
 
 
 
 
-  
+
+void moteurDC(int sens, int intensite, int pinSens, int pinIntensite){
+    digitalWrite(pinSens, sens);
+    analogWrite(pinIntensite, intensite);
+}
+
+void Arreter(){
+  analogWrite(pinMoteur1,0);
+  analogWrite(pinMoteur2,0);
+}
+void MiseEnMarche(){
+  analogWrite(pinMoteur1,1);
+  analogWrite(pinMoteur2,1);
+}
+void Ralentir(){
+  Power = 40;
+  analogWrite(pinMoteur1,Power);
+  analogWrite(pinMoteur2,Power);
+}
+
+void Accelerer(){
+  Power=255;
+  analogWrite(pinMoteur1,Power);
+  analogWrite(pinMoteur2,Power);
+}
+void Gauche(){
+  analogWrite(pinMoteur1,0);
+  analogWrite(pinMoteur2,1);
+}
+void Droite(){
+  analogWrite(pinMoteur1,1);
+  analogWrite(pinMoteur2,0);
+}
