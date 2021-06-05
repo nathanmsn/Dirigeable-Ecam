@@ -175,12 +175,12 @@ int bougerMoteurPasAPas(float mesure, int pin1, int pin2, int pin3, int pin4, in
       thisStep.step(stepsPerRevolution/2); //fait un demi tour de moteur d vers le bas
       nombreDeDemiTours++;    
     
-    }
-    else{
+  }
+  else{
       thisStep.step(-stepsPerRevolution/2); //va vers le haut
       nombreDeDemiTours--;
    
-    }
+  }
 
     return nombreDeDemiTours; 
 }
