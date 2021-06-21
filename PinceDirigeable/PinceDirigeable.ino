@@ -1,4 +1,5 @@
 
+/* Code écrit par Louis, Arthur et Nathan*/
 //attention ne rien brancher sur les pins 20 et 21,elles sont utilisées pour le gyro
 
 
@@ -170,7 +171,7 @@ void loop() {
     compteurMesures++;
   }
 
-  if(compteurMesures = 4){
+  if(compteurMesures == 4){
     for(int j = 0; j <= 3; j++){
       for(int i = 0; i <= 3; i++){
         if(tableauDistances[i] >= tableauDistances[i + 1]){
@@ -180,7 +181,7 @@ void loop() {
         }
       }
     }
-    
+    compteurMesures = 0;
   }
  
   //Serial.print(distance);
@@ -215,10 +216,10 @@ void loop() {
     
   }
   
-  if(distance >= distanceIdeale + 10){
+  if(tableauDistances[2] >= distanceIdeale + 10){
     intensiteMoteur = intensiteMoteur - 100;
   }
-  else if(distance <= distanceIdeale - 10){
+  else if(tableauDistances[2] <= distanceIdeale - 10){
     intensiteMoteur = intensiteMoteur + 100;
   }
 
