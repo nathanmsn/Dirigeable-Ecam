@@ -31,7 +31,6 @@ const uint8_t pinTourner = A3;
 const uint8_t pinDecaler = A4;
 
 //Pin input propulsion
-
 const uint8_t pinArret=A5;
 const uint8_t pinDemarrer=A6;
 const uint8_t pinRalentir=A7;
@@ -47,7 +46,8 @@ const uint8_t servoPinOuvrir = 5;
 
 
 //initialisation du moteur pas à pas
-const int stepsPerRevolution = 90;
+const int stepsPerRevolution = 90;//au pif
+
 Stepper stepDescendre(stepsPerRevolution, 10, 11, 12, 13);
 Stepper stepTourner(stepsPerRevolution, 14, 15, 16, 17);
 Stepper stepDecaler(stepsPerRevolution, 18, 19, 20, 21);
@@ -122,7 +122,7 @@ void setup() {
   pinMode(trigPin,OUTPUT); //set pinmodes
   pinMode(echoPin,INPUT);
 
-  // Init module GY-512 
+  //Init module GY-512 
   Wire.begin();
   Wire.beginTransmission(MPU);
   Wire.write(0x6B);
