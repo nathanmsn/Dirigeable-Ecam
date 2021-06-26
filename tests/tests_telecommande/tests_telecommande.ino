@@ -11,7 +11,7 @@ void setup() {
 
 }
 
-void loop() {
+void loop() { 
 
   Serial.println(measureTelecommande()); 
  delay(1000);

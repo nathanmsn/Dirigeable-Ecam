@@ -22,21 +22,10 @@ int  GATCorr[NumData]={0,0,0,0,0,0,0};
 double PitchRoll[3];
 int angleInitial;
 
-/*début initialisation pince*/
+/*début initialisation telecommande*/
+int channels[6];
+const int pinsTelecommande[6] = {A1, A0, A2, A3, A4, A5};
 
-//Pin input pince
-const uint8_t pinOuvrir = A1;
-const uint8_t pinDescendre = A2;
-const uint8_t pinTourner = A3;
-const uint8_t pinDecaler = A4;
-
-//Pin input propulsion
-const uint8_t pinArret=A5;
-const uint8_t pinDemarrer=A6;
-const uint8_t pinRalentir=A7;
-const uint8_t pinAccelerer=A9;
-const uint8_t pinGauche=A10;
-const uint8_t pinDroite=A11;
 
 //Pin output pince
 const uint8_t servoPinOuvrir = 5; 
@@ -101,10 +90,7 @@ void setup() {
 
   Serial.begin(9600);
 
-  pinMode(pinOuvrir, INPUT);
-  pinMode(pinDescendre, INPUT);
-  pinMode(pinTourner, INPUT);
-  pinMode(pinDecaler, INPUT);
+ 
   
   //servoOuvrir.attach(servoPinOuvrir);
 
@@ -112,12 +98,7 @@ void setup() {
   //pour la propulsion 
   pinMode(pinMoteur1,OUTPUT);
   pinMode(pinMoteur2,OUTPUT);
-  pinMode(pinGauche,INPUT);
-  pinMode(pinDroite,INPUT);
-  pinMode(pinDemarrer,INPUT);
-  pinMode(pinArret,INPUT);
-  pinMode(pinRalentir,INPUT);
-  pinMode(pinAccelerer,INPUT);
+ 
 
   pinMode(trigPin,OUTPUT); //set pinmodes
   pinMode(echoPin,INPUT);
@@ -129,7 +110,12 @@ void setup() {
   Wire.write(0);
   Wire.endTransmission(true);
 
-
+  pinMode(A0,INPUT);
+  pinMode(A1,INPUT);
+  pinMode(A2,INPUT);
+  pinMode(A3,INPUT);
+  pinMode(A4,INPUT);
+  pinMode(A5,INPUT);
   
    
  //set timer4 interrupt at 1Hz
@@ -258,10 +244,7 @@ void loop() {
 
 
 ISR(TIMER4_COMPA_vect){//timer1 interrupt 1Hz
-  ouvrir = analogRead(pinOuvrir)*5.00/1023;
-  descendre = analogRead(pinDescendre)*5.00/1023;
-  tourner = analogRead(pinTourner)*5.00/1023;
-  decaler = analogRead(pinDecaler)*5.00/1023;
+  
   ReadGY521(GyAccTemp, GATCorr);
   arreterLesActions = false; 
  
@@ -406,4 +389,25 @@ void ComputeAngle(int *GyAccTempp,  double *PitchRol)
   PitchRol[0] = PitchRol[0] * (180.0/pi);
   PitchRol[1] = PitchRol[1] * (180.0/pi) ;
   PitchRol[2] = PitchRol[2] * (180.0/pi) ;
+}
+
+void measureTelecommande(){
+  int avg[6] = {0, 0, 0, 0, 0, 0};
+  int cpt = 0;
+
+  
+  unsigned long init = millis();
+  while(1){
+    if ( (millis() - init) > 19.3 ) break;
+    for(int i = 0; i <= 1; i++){
+      avg[i] += analogRead(pinsTelecommande[i]);
+    }
+    cpt++;
+    
+    
+  }
+ for(int i = 0; i <= 1; i++){
+  channels[i] = avg[i]/cpt;
+ }
+  
 }
