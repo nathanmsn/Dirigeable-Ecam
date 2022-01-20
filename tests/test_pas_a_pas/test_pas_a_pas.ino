@@ -1,11 +1,19 @@
 // Include the Arduino Stepper Library
 #include <Stepper.h>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
 // Number of steps per output rotation
 const int stepsPerRevolution = 125;
 
 // Create Instance of Stepper library
+<<<<<<< HEAD
 Stepper myStepper(stepsPerRevolution, 22, 23, 24, 25);
+=======
+Stepper myStepper(stepsPerRevolution, 34, 36, 38, 40);
+>>>>>>> develop
 
 
 
@@ -23,7 +31,11 @@ void loop() {
   // step one revolution in one direction:
   Serial.println("clockwise");
   myStepper.step(stepsPerRevolution);
+<<<<<<< HEAD
   delay(500);
+=======
+  //delay(500);
+>>>>>>> develop
 
 // step one revolution in the other direction:
   Serial.println("counterclockwise");

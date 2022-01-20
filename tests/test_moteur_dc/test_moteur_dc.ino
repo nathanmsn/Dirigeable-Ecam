@@ -18,6 +18,10 @@
 #define MAX_PULSE_LENGTH 2000 // Maximum pulse length in µs
 // ---------------------------------------------------------------------------
 Servo motA, motB, motC, motD, motE, motF, motG, motH;
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
 char data;
 // ---------------------------------------------------------------------------
 
@@ -31,10 +35,17 @@ void setup() {
     motB.attach(3, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
     motC.attach(4, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
     motD.attach(5, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
+<<<<<<< HEAD
     motA.attach(6, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
     motB.attach(7, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
     motC.attach(11, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
     motD.attach(12, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
+=======
+    motE.attach(6, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
+    motF.attach(7, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
+    motG.attach(11, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
+    motH.attach(12, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
+>>>>>>> develop
     
     
     displayInstructions();
@@ -92,7 +103,11 @@ void loop() {
  */
 void test()
 {
+<<<<<<< HEAD
     for (int i = MIN_PULSE_LENGTH; i <= MAX_PULSE_LENGTH; i += 5) {
+=======
+    for (int i = MIN_PULSE_LENGTH + 200; i <= MAX_PULSE_LENGTH-800; i += 5) {
+>>>>>>> develop
         Serial.print("Pulse length = ");
         Serial.println(i);
         
@@ -105,7 +120,11 @@ void test()
         motG.writeMicroseconds(i);
         motH.writeMicroseconds(i);
         
+<<<<<<< HEAD
         delay(200);
+=======
+        delay(2000);
+>>>>>>> develop
     }
 
     Serial.println("STOP");

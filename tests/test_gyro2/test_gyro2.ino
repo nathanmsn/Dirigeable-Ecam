@@ -44,6 +44,7 @@ void loop()
   ComputeAngle(GyAccTemp, PitchRoll);
 
   // Affichage dans le port série Roll/Pitch/ Yaw en °
+<<<<<<< HEAD
   Serial.print(PitchRoll[0]); Serial.print(",");
   Serial.print(PitchRoll[1]); Serial.print(",");
   Serial.println(PitchRoll[2]); //Serial.print(";");
@@ -53,11 +54,32 @@ void loop()
   Serial.print(GyAccTemp[0]); Serial.print(",");
   Serial.print(GyAccTemp[1]); Serial.print(",");
   Serial.println(GyAccTemp[2]); 
+=======
+
+  
+ /* Serial.print(PitchRoll[0]); Serial.print(",");
+  Serial.print(PitchRoll[1]); Serial.print(",");
+  Serial.println(PitchRoll[2]); //Serial.print(";");*/
+
+
+  //Affichage des 3 Axes de l'Accéléromètre 
+  /*Serial.print(GyAccTemp[0]); Serial.print(",");
+  Serial.print(GyAccTemp[1]); Serial.print(",");
+  Serial.println(GyAccTemp[2]); */
+>>>>>>> develop
   
   // Affichage 3 Axes du Gyroscope
   Serial.print(GyAccTemp[4]); Serial.print(",");
   Serial.print(GyAccTemp[5]); Serial.print(",");
+<<<<<<< HEAD
   Serial.println(GyAccTemp[6]);*/
+=======
+  Serial.println(GyAccTemp[6]);
+
+  delay(100);
+
+  
+>>>>>>> develop
 }
 
 

@@ -79,7 +79,11 @@ void loop() {
  */
 void test()
 {
+<<<<<<< HEAD
     for (int i = MIN_PULSE_LENGTH; i <= MAX_PULSE_LENGTH; i += 5) {
+=======
+    for (int i = MIN_PULSE_LENGTH; i <= 1100; i += 5) {
+>>>>>>> develop
         Serial.print("Pulse length = ");
         Serial.println(i);
         
