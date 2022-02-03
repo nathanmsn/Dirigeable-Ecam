@@ -7,14 +7,16 @@
 
 Servo servoDroit, servoGauche, motPropulsionGauche, motPropulsionDroit;
 
-int arriveeTelecommande[4];
-int pinsTelecommande[] = {7, 6};
-int pinInverseurGauche = 6;
-int pinInverseurDroit = 7;
+int arriveeTelecommande[6];
+int pinsTelecommande[] = {8,9,10,11,12,13};
+
+//motPropulsionDroit =4;
+int pinInverseurDroit = 5;
+//motPropulsionGauche = 6;
+int pinInverseurGauche = 7;
 
 
 int joystickGauche = 2;
-int joystickDroit = 0;
+int joystickDroit = 8;
 
-int chronoSwitchG;
-int chronoSwitchD;
+int sens;
