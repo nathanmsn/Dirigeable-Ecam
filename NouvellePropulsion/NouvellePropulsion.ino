@@ -17,6 +17,11 @@ int pinInverseurGauche = 7;
 
 
 int joystickGauche = 2;
-int joystickDroit = 8;
+int joystickDroitA = 5; // bouton gauche
+int joystickDroitB = 6; // droite et gauche 
 
 int sens;
+int obvious;
+// Joystick gauche (mouvement gauche droite) = PIN 3
+// bouton droit = PIN 4
+// bouton GAUCHE = PIN 5
