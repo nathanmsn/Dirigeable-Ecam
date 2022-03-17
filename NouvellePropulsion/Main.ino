@@ -3,31 +3,43 @@ void loop()
  measureTelecommande();
  //digitalWrite(joystickDroitB, HIGH);
  // Servo droit (
-
  int servomoteurDroit;
+ int servomoteurGauche;
  
- servomoteurDroit=round(map(arriveeTelecommande[joystickDroitA],-5,1000,0,180));
+ servomoteurDroit=map(arriveeTelecommande[joystickDroitA],-5,1000,0,180);
 
- digitalWrite(2, HIGH);
- if (servomoteurDroit == obvious)
+ //digitalWrite(2, HIGH);
+ if (servomoteurDroit > obvious1-5 && servomoteurDroit < obvious1+5)
  {
     
  }
  else
  {
   servoDroit.write(servomoteurDroit);
+  obvious1=servomoteurDroit;
   delay(15);
  }
  
- // A faire : arrondir à la dizaine, changer completement de mode )
- 
-// Servo Gauche
+
+ servomoteurGauche=map(arriveeTelecommande[joystickDroitA],-5,1000,0,180);
+
+ //digitalWrite(3, HIGH);
+ if (servomoteurGauche > obvious2-5 && servomoteurGauche < obvious2+5)
+ {
+    
+ }
+ else
+ {
+  servoGauche.write(servomoteurGauche);
+  obvious2=servomoteurGauche;
+  delay(15);
+ }
 
 
 
 
 
-/*
+
  //Moteur Gauche
  if(arriveeTelecommande[joystickGauche] <= 480)
  {
@@ -68,7 +80,7 @@ void loop()
  else if (arriveeTelecommande[joystickGauche] >  480 && arriveeTelecommande[joystickGauche] < 520)
   {
    motPropulsionGauche.write(0);
-  } /*/
+  } 
 }
  
 //motPropulsionGauche.write = map(arriveeTelecommande[2],0,1000,0,90);

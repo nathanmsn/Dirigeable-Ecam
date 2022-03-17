@@ -6,7 +6,8 @@ void measureTelecommande()
   {
     arriveeTelecommande[i] = pulseIn(pinsTelecommande[i],HIGH, 50000) - 1000;
     //Serial.println(i);
-    Serial.println(arriveeTelecommande[5]);
+   Serial.println(arriveeTelecommande[2]);
+    
     
   }
 

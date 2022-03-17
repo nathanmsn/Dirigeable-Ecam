@@ -21,7 +21,10 @@ int joystickDroitA = 5; // bouton gauche
 int joystickDroitB = 6; // droite et gauche 
 
 int sens;
-int obvious;
+int obvious1; // permet de comparer avec la valeur précédente pour éviter un surplux d'information (servo)
+int obvious2;
 // Joystick gauche (mouvement gauche droite) = PIN 3
 // bouton droit = PIN 4
 // bouton GAUCHE = PIN 5
+//int servomoteurDroit;
+//int servomoteurGauche;

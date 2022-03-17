@@ -19,7 +19,7 @@ void setup()
   //delay(10000);
   
   servoDroit.attach(5);
-  servoGauche.attach(4);
+  servoGauche.attach(3);
   
   pinMode(6, OUTPUT);
   pinMode(7, OUTPUT);
@@ -31,10 +31,11 @@ void setup()
   pinMode(13, INPUT);
 
   // Le pin 1 et 2 vont désormais délivrer du 5V
-  pinMode(2, OUTPUT);
-  pinMode(3, OUTPUT);
+//  pinMode(2, OUTPUT);
+//  pinMode(3, OUTPUT);
 
-  obvious = 0;
+  obvious1 = 0;
+  obvious2 = 0;
  
   
 
