@@ -10,7 +10,7 @@ Servo motPropulsionGauche, motPropulsionDroit;
 
 
 
-int pinInverseurGauche1 = 3;
-int pinInverseurGauche2 = 4;
-int pinInverseurDroit1 = 5;
-int pinInverseurDroit2 = 6;
+int pinInverseurGauche1 = 7;
+int pinInverseurGauche2 = 7;
+int pinInverseurDroit1 = 7;
+int pinInverseurDroit2 = 7;

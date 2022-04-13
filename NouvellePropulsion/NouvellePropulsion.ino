@@ -5,7 +5,9 @@
 #define MAX_PULSE_LENGTH 2000 // Maximum pulse length in µs
 #define propultionMax 1100 //valeur max de propultion
 
-Servo servoDroit, servoGauche, motPropulsionGauche, motPropulsionDroit;
+Servo servoInterieur, servoDroit, servoGauche, motPropulsionGauche, motPropulsionDroit;
+
+int tmp;
 
 int arriveeTelecommande[6];
 int pinsTelecommande[] = {8,9,10,11,12,13};
@@ -16,15 +18,11 @@ int pinInverseurDroit = 5;
 int pinInverseurGauche = 7;
 
 
+int joystickDroit = 1;
 int joystickGauche = 2;
-int joystickDroitA = 5; // bouton gauche
-int joystickDroitB = 6; // droite et gauche 
 
-int sens;
-int obvious1; // permet de comparer avec la valeur précédente pour éviter un surplux d'information (servo)
-int obvious2;
-// Joystick gauche (mouvement gauche droite) = PIN 3
-// bouton droit = PIN 4
-// bouton GAUCHE = PIN 5
-//int servomoteurDroit;
-//int servomoteurGauche;
+
+String sens = "Null";
+int chronoSwitchD = 0;
+int chronoSwitchG = 0;
+const int tmpsDArret = 5000; // Temps d'arrêt des moteurs de propulsion quand on change de sens 

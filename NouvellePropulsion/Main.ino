@@ -1,87 +1,114 @@
 void loop() 
 {
  measureTelecommande();
- //digitalWrite(joystickDroitB, HIGH);
- // Servo droit (
- int servomoteurDroit;
- int servomoteurGauche;
+
+//Servo intérieur (3 positions)
  
- servomoteurDroit=map(arriveeTelecommande[joystickDroitA],-5,1000,0,180);
+if (arriveeTelecommande[5]<0){
+  servoInterieur.write(0);
+}
+if (arriveeTelecommande[5]>400 && arriveeTelecommande[5]<600){
+  servoInterieur.write(30);
+}
+if (arriveeTelecommande[5]>900){
+  servoInterieur.write(90);
+}
 
- //digitalWrite(2, HIGH);
- if (servomoteurDroit > obvious1-5 && servomoteurDroit < obvious1+5)
- {
-    
- }
- else
- {
-  servoDroit.write(servomoteurDroit);
-  obvious1=servomoteurDroit;
-  delay(15);
- }
- 
+//Servos Extérieurs (2 positions)
+if (arriveeTelecommande[4]<0){
+  servoDroit.write(90);
+  servoGauche.write(90);
+}
+if (arriveeTelecommande[4]>900){
+  servoDroit.write(180);
+  servoGauche.write(0);
+}
 
- servomoteurGauche=map(arriveeTelecommande[joystickDroitA],-5,1000,0,180);
-
- //digitalWrite(3, HIGH);
- if (servomoteurGauche > obvious2-5 && servomoteurGauche < obvious2+5)
- {
-    
- }
- else
- {
-  servoGauche.write(servomoteurGauche);
-  obvious2=servomoteurGauche;
-  delay(15);
- }
-
-
-
-
-
-
+moteurGauche(arriveeTelecommande[joystickGauche]);
+moteurDroit(arriveeTelecommande[joystickDroit]);
+/*
  //Moteur Gauche
  if(arriveeTelecommande[joystickGauche] <= 480)
  {
-    if (sens != 1)
+    if (sens != "Arriere" && millis()- chronoSwitchG > 5000)
     {
       motPropulsionGauche.write(0);
-      delay(1000);
+      chronoSwitchG = millis();
       digitalWrite(pinInverseurGauche, HIGH);
       motPropulsionGauche.write(map(500 - arriveeTelecommande[joystickGauche],0,500,1000,propultionMax));
-      sens=1;
+      sens="Arriere" ;
       
     }
     else
     {
       digitalWrite(pinInverseurGauche, HIGH);
        motPropulsionGauche.write(map(500 - arriveeTelecommande[joystickGauche],0,500,1000,propultionMax));
-       sens = 1;
+       sens = "Arriere" ;
     }
  }
  else if (arriveeTelecommande[joystickGauche] >= 520)
  {
-  if (sens != 0)
+  if (sens !="Avant"&& millis() - chronoSwitchG > 5000)
     {
       motPropulsionGauche.write(0);
-      delay(1000);
+      chronoSwitchG = millis();
       digitalWrite(pinInverseurGauche, LOW);
       motPropulsionGauche.write(map(arriveeTelecommande[joystickGauche],500,1000,1000,propultionMax));
-      sens=0;
+      sens="Avant" ;
     }
    else
     {
       digitalWrite(pinInverseurGauche, LOW);
       motPropulsionGauche.write(map(arriveeTelecommande[joystickGauche],500,1000,1000,propultionMax));
-      sens=0;
+      sens="Avant" ;
     }
 
   }
  else if (arriveeTelecommande[joystickGauche] >  480 && arriveeTelecommande[joystickGauche] < 520)
   {
    motPropulsionGauche.write(0);
-  } 
+  }
+
+ //Moteur Droit
+ if(arriveeTelecommande[joystickDroit] <= 480)
+ {
+    if (sens != "Arriere" && millis()- chronoSwitchD > 5000)
+    {
+      motPropulsionDroit.write(0);
+      chronoSwitchD = millis();
+      digitalWrite(pinInverseurDroit, HIGH);
+      motPropulsionDroit.write(map(500 - arriveeTelecommande[joystickDroit],0,500,1000,propultionMax));
+      sens="Arriere" ;
+      
+    }
+    else
+    {
+      digitalWrite(pinInverseurDroit, HIGH);
+       motPropulsionDroit.write(map(500 - arriveeTelecommande[joystickDroit],0,500,1000,propultionMax));
+       sens = "Arriere" ;
+    }
+ }
+ else if (arriveeTelecommande[joystickDroit] >= 520)
+ {
+  if (sens !="Avant" && millis() - chronoSwitchD > 5000)
+    {
+      motPropulsionDroit.write(0);
+      chronoSwitchD = millis();
+      digitalWrite(pinInverseurDroit, LOW);
+      motPropulsionDroit.write(map(arriveeTelecommande[joystickDroit],500,1000,1000,propultionMax));
+      sens="Avant" ;
+    }
+   else
+    {
+      digitalWrite(pinInverseurDroit, LOW);
+      motPropulsionDroit.write(map(arriveeTelecommande[joystickDroit],500,1000,1000,propultionMax));
+      sens="Avant" ;
+    }
+
+  }
+ else if (arriveeTelecommande[joystickDroit] >  480 && arriveeTelecommande[joystickDroit] < 520)
+  {
+   motPropulsionGauche.write(0);
+  }
+ */
 }
- 
-//motPropulsionGauche.write = map(arriveeTelecommande[2],0,1000,0,90);
-//motPropulsionDroit.write = map(arriveeTelecommande[3],0,1000,0,90);

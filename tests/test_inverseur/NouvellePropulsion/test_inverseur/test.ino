@@ -1,6 +1,6 @@
   void test()
 {
-    for (int i = MIN_PULSE_LENGTH; i <= 1050; i += 1) {
+    for (int i = MIN_PULSE_LENGTH; i <= 1200; i += 4) {
         Serial.print("Pulse length = ");
         Serial.println(i);
         

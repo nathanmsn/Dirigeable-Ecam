@@ -3,7 +3,7 @@ void setup()
   // put your setup code here, to run once:
    Serial.begin(9600);
 
-  motPropulsionGauche.attach(8, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
+  motPropulsionGauche.attach(6, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
   motPropulsionDroit.attach(9, MIN_PULSE_LENGTH, MAX_PULSE_LENGTH);
 
   
@@ -11,7 +11,7 @@ void setup()
   motPropulsionDroit.write(MAX_PULSE_LENGTH);
   
   Serial.println("plug battery once beeping is done");
-  delay(20000);
+  delay(10000);
   
   motPropulsionGauche.write(MIN_PULSE_LENGTH);
   motPropulsionDroit.write(MIN_PULSE_LENGTH);
