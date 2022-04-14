@@ -20,7 +20,7 @@ if (arriveeTelecommande[4]<0){
   servoGauche.write(90);
 }
 if (arriveeTelecommande[4]>900){
-  servoDroit.write(180);
+  servoDroit.write(90);
   servoGauche.write(0);
 }
 
