@@ -7,12 +7,12 @@ if ((arriveeTele >  valeurTelBasse && arriveeTele < valeurTelHaute) or millis()-
 else {
   //sens avant
   if (arriveeTele >= valeurTelHaute){
-    if (sens != "Avant") //alors il faut changer le sens de marche, cad mettre le moteur a zéro puis changer de sens
+    if (sensG != "Avant") //alors il faut changer le sens de marche, cad mettre le moteur a zéro puis changer de sens
     {
       motPropulsionGauche.write(0);
       chronoSwitchG = millis();
       digitalWrite(pinInverseurGauche, LOW);
-      sens="Avant" ;
+      sensG="Avant" ;
     }
    else
     { // fonctionnement normal
@@ -21,12 +21,12 @@ else {
   }
    //sens arriere
   if (arriveeTele <= valeurTelBasse){
-    if (sens != "Arriere") //alors il faut changer le sens de marche, cad mettre le moteur a zéro puis changer de sens
+    if (sensG != "Arriere") //alors il faut changer le sens de marche, cad mettre le moteur a zéro puis changer de sens
     {
       motPropulsionGauche.write(0);
       chronoSwitchG = millis();
       digitalWrite(pinInverseurGauche, HIGH);
-      sens="Arriere" ;
+      sensG="Arriere" ;
     }
    else
     { // fonctionnement normal

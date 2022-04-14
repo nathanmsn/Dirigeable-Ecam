@@ -16,11 +16,11 @@ if (arriveeTelecommande[5]>900){
 
 //Servos Extérieurs (2 positions)
 if (arriveeTelecommande[4]<0){
-  servoDroit.write(90);
+  servoDroit.write(55);
   servoGauche.write(90);
 }
 if (arriveeTelecommande[4]>900){
-  servoDroit.write(90);
+  servoDroit.write(165);
   servoGauche.write(0);
 }
 
