@@ -16,7 +16,7 @@ else {
     }
    else
     { // fonctionnement normal
-      motPropulsionDroit.write(map(arriveeTele,valeurTelHaute,1000,1000,propultionMax));
+      motPropulsionDroit.write(map(arriveeTele,valeurTelHaute,2000,1000,propultionMax));
     }
   }
    //sens arriere
@@ -30,7 +30,7 @@ else {
     }
    else
     { // fonctionnement normal
-      motPropulsionDroit.write(map(500 - arriveeTele,500-valeurTelBasse,500,1000,propultionMax));
+      motPropulsionDroit.write(map(1500 - arriveeTele,1500-valeurTelBasse,1500,1000,propultionMax));
     }
   }
 }

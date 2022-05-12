@@ -21,8 +21,8 @@ int pinInverseurGauche = 7;
 int joystickDroit = 1;
 int joystickGauche = 2;
 
-int valeurTelHaute = 540; // pour ne pas compter les valeurs 460 et 540
-int valeurTelBasse = 460;
+int valeurTelHaute = 1540; // pour ne pas compter les valeurs 460 et 540
+int valeurTelBasse = 1460;
 String sensG = "Null";
 String sensD = "Null";
 int chronoSwitchD = 0;
