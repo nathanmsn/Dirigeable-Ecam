@@ -1,2 +1,3 @@
 # Dirigeable-Ecam
-La pince du dirigeable
+Le code qui va nous servir à faire fonctionner ce dirigeable.
+
