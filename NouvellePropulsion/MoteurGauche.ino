@@ -30,7 +30,7 @@ else {
     }
    else
     { // fonctionnement normal
-      motPropulsionGauche.write(map(1500 - arriveeTele,1500-valeurTelBasse,1500,1000,propultionMax));
+      motPropulsionGauche.write(map(arriveeTele,valeurTelBasse,1000,1000,propultionMax));
     }
   }
 }

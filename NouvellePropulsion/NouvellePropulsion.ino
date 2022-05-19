@@ -3,7 +3,7 @@
 
 #define MIN_PULSE_LENGTH 1000 // Minimum pulse length in µs
 #define MAX_PULSE_LENGTH 2000 // Maximum pulse length in µs
-#define propultionMax 1200 //valeur max de propultion
+#define propultionMax 1300 //valeur max de propultion
 
 Servo servoInterieur, servoDroit, servoGauche, motPropulsionGauche, motPropulsionDroit;
 
@@ -21,8 +21,8 @@ int pinInverseurGauche = 7;
 int joystickDroit = 1;
 int joystickGauche = 2;
 
-int valeurTelHaute = 1540; // pour ne pas compter les valeurs 460 et 540
-int valeurTelBasse = 1460;
+int valeurTelHaute = 1560; // pour ne pas compter les valeurs 460 et 540
+int valeurTelBasse = 1440;
 String sensG = "Null";
 String sensD = "Null";
 int chronoSwitchD = 0;
