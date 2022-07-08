@@ -1,6 +1,6 @@
 void loop() {
   
-
+  measureTelecommande();
   // Configuration du L298N en "marche avant", pour le moteur connecté au pont A. Selon sa table de vérité, il faut que :
   digitalWrite(borneIN1, HIGH);                 // L'entrée IN1 doit être au niveau haut
   digitalWrite(borneIN2, LOW);                  // L'entrée IN2 doit être au niveau bas
@@ -22,7 +22,7 @@ void loop() {
   // Et on relance le moteur (branché sur le pont A du L298N)
   lancerRotationMoteurPontA();
   lancerRotationMoteurPontB();
-  // Puis... on boucle à l'infini !
+  // Puis... on boucle à l'infini
 }
 
 

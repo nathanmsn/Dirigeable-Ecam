@@ -5,7 +5,7 @@ void measureTelecommande()
   {
     arriveeTelecommande[i] = pulseIn(pinsTelecommande[i],HIGH, 50000);
     Serial.println(i);
-   Serial.println(arriveeTelecommande[joystickGauche]);    
+    Serial.println(arriveeTelecommande[joystickGauche]);    
   }
   
 }
