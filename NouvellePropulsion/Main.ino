@@ -20,12 +20,12 @@ if (arriveeTelecommande[5]>1800){
 
 //Servos Extérieurs (2 positions)
 if (arriveeTelecommande[4]<1300){
-  servoDroit.write(90);
-  servoGauche.write(84);
+  servoDroit.write(180);
+  servoGauche.write(78);
 }
 if (arriveeTelecommande[4]>1700){
-  servoDroit.write(0);
-  servoGauche.write(165);
+  servoDroit.write(70);
+  servoGauche.write(180);
 }
 if (arriveeTelecommande[joystickGauche]<500 && arriveeTelecommande[joystickGauche]>-10 ||arriveeTelecommande[joystickDroit]<500 && arriveeTelecommande[joystickDroit]>-10 ) { // si jamais le recepteur radio se déconnecte, les moteurs s'éteignent automatiquement
 moteurGauche(1500);
