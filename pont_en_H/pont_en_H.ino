@@ -11,5 +11,7 @@
 int arriveeTelecommande[8];
 int pinsTelecommande[] = {4,5,6,7,8,9,10,11};
 
-int joystickDroit = 2;
-int joystickGauche = 3;
+int joystickDroitHB = 7; // joystick droit haut bas
+int joystickDroitDG = 6; // Joystick DROIT droite gauche
+int valeurTelHaute = 1560; // pour ne pas compter les valeurs 1460 et 1540
+int valeurTelBasse = 1440;

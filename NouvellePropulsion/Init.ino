@@ -15,22 +15,23 @@ void setup()
   motPropulsionDroit.write(MIN_PULSE_LENGTH);
   
  
-  servoInterieur.attach(22);
+  servoInterieur.attach(5);
   servoDroit.attach(2);
   servoGauche.attach(3);
 
   pinMode(22,OUTPUT);
+  pinMode(23,OUTPUT);
   pinMode(2,OUTPUT);
-  pinMode(3, OUTPUT);
-  pinMode(4, OUTPUT);
+  pinMode(3,OUTPUT);
+  pinMode(4,OUTPUT);
   pinMode(5,OUTPUT);
-  pinMode(6, OUTPUT);
-  pinMode(7, OUTPUT);
-  pinMode(8, INPUT);
-  pinMode(9, INPUT);
-  pinMode(10, INPUT);
-  pinMode(11, INPUT);
-  pinMode(12, INPUT);
-  pinMode(13, INPUT);
+  pinMode(6,OUTPUT);
+  pinMode(7,OUTPUT);
+  pinMode(8,INPUT);
+  pinMode(9,INPUT);
+  pinMode(10,INPUT);
+  pinMode(11,INPUT);
+  pinMode(12,INPUT);
+  pinMode(13,INPUT);
 
 }

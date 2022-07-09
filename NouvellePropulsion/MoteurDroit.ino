@@ -1,6 +1,6 @@
 void moteurDroit(int arriveeTele){
   
-if ((arriveeTele > valeurTelBasse && arriveeTele < valeurTelHaute) or millis()-chronoSwitchD < 1000)
+if ((arriveeTele > valeurTelBasse && arriveeTele < valeurTelHaute) || millis()-chronoSwitchD < tmpsDArret)
   {
    motPropulsionDroit.write(0);
   }
