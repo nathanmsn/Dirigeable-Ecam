@@ -3,7 +3,7 @@
 
 #define MIN_PULSE_LENGTH 1000 // Minimum pulse length in µs
 #define MAX_PULSE_LENGTH 2000 // Maximum pulse length in µs
-#define propultionMax 1200 //valeur max de propultion
+#define propultionMax 1350 //valeur max de propultion
 
 Servo servoInterieur, servoDroit, servoGauche, motPropulsionGauche, motPropulsionDroit;
 
@@ -29,4 +29,4 @@ String sensG = "Null";
 String sensD = "Null";
 int chronoSwitchD = 0;
 int chronoSwitchG = 0;
-const int tmpsDArret = 1500; // Temps d'arrêt des moteurs de propulsion quand on change de sens 
+const int tmpsDArret = 3000; // Temps d'arrêt des moteurs de propulsion quand on change de sens 

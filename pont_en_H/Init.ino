@@ -17,5 +17,16 @@ void setup() {
   pinMode(9, INPUT);
   pinMode(10, INPUT);
   pinMode(11, INPUT);
+
+  // pin balastes
+  pinMode(34,OUTPUT); // Balaste 1
+  pinMode(35,OUTPUT); // Balaste 2
+
+  // pin Servo
+  pinMode(3,OUTPUT); // fermeture
+  pinMode(4,OUTPUT); // rotation
+  
+  servoFermeture.attach(3);
+  servoRotation.attach(4);
  
 }

@@ -11,10 +11,10 @@ if (arriveeTelecommande[5]>1200 && arriveeTelecommande[5]<1400){
   servoInterieur.write(75);
 }
 if (arriveeTelecommande[5]>1500 && arriveeTelecommande[5]<1700){
-  servoInterieur.write(115);
+  servoInterieur.write(120);
 }
 if (arriveeTelecommande[5]>1800){
-  servoInterieur.write(150);
+  servoInterieur.write(165);
 
 }
 

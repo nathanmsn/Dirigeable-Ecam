@@ -11,7 +11,7 @@ else {
     {
       motPropulsionDroit.write(0);
       chronoSwitchD = millis();
-      digitalWrite(pinInverseurDroit, LOW);
+      digitalWrite(pinInverseurDroit, HIGH);
       sensD="Avant" ;
     }
    else
@@ -25,7 +25,7 @@ else {
     {
       motPropulsionDroit.write(0);
       chronoSwitchD = millis();
-      digitalWrite(pinInverseurDroit, HIGH);
+      digitalWrite(pinInverseurDroit, LOW);
       sensD="Arriere" ;
     }
    else
