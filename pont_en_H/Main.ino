@@ -2,15 +2,15 @@ void loop() {
   
   measureTelecommande();
 // moteur Haut Bas  
-moteur(arriveeTelecommande[joystickDroitHB],borneENB);
+moteur(arriveeTelecommande[joystickDroitHB]);
 // moteur Translation
-moteur(arriveeTelecommande[joystickDroitDG],borneENA);
+//moteur(arriveeTelecommande[joystickDroitDG],borneENA);
 
 
 //Balastes
 balastes(arriveeTelecommande[0]);
 
 //Pinces
-pince(arriveeTelecommande[AileDR],arriveeTelecommande[3]);
+pince(arriveeTelecommande[gear],arriveeTelecommande[1]);
   
 }

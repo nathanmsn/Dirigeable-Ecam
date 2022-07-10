@@ -1,5 +1,5 @@
 void balastes(int arriveeTelecommande){
-
+ Serial.println(arriveeTelecommande);
   if (arriveeTelecommande > 1700){
  
   digitalWrite(pinBalaste1, HIGH);  
